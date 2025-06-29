@@ -1,3 +1,4 @@
+
 import { GoogleGenAI } from "@google/genai";
 import { type AnalysisResult } from '../types';
 
@@ -37,9 +38,9 @@ export const analyzeAudio = async (base64Audio: string): Promise<AnalysisResult>
 
         const response = await ai.models.generateContent({
             model: 'gemini-2.5-flash-preview-04-17',
-            contents: {
+            contents: [{ // Corrected: The 'contents' field must be an array of Content objects.
                 parts: [audioPart, { text: PROMPT }]
-            },
+            }],
             config: {
                 responseMimeType: 'application/json',
             }
@@ -71,6 +72,14 @@ export const analyzeAudio = async (base64Audio: string): Promise<AnalysisResult>
     } catch (e) {
         console.error("Error analyzing audio:", e);
         if (e instanceof Error) {
+            // Check for specific API key error from Google's API
+            if (e.message.includes("API_KEY_INVALID")) {
+                 throw new Error("Your API key is invalid. Please ensure the API_KEY environment variable is set correctly in your deployment configuration.");
+            }
+            if (e.message.includes("contents is not specified")) {
+                throw new Error("The request to the AI model was malformed. This is likely a code issue.");
+            }
+            // Preserve the original error for other cases
             throw new Error(`API call failed: ${e.message}`);
         }
         throw new Error("An unknown error occurred while communicating with the AI model.");

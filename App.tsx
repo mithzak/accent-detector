@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useCallback } from 'react';
 import { type RecordingState, type AnalysisResult } from './types';
 import { analyzeAudio } from './services/geminiService';
@@ -76,7 +77,7 @@ const App: React.FC = () => {
         } catch (err: unknown) {
             const errorMessage = err instanceof Error ? err.message : "An unknown error occurred during analysis.";
             console.error("Analysis failed:", errorMessage);
-            setError(`Failed to analyze audio. ${errorMessage}`);
+            setError(errorMessage);
             setRecordingState('error');
         }
     };
