@@ -1,0 +1,6 @@
+name = "accent-detector"
+main = "index.tsx"   # or point to the compiled JS entry like "dist/index.js"
+compatibility_date = "2025-06-29"
+
+[build]
+command = "npm run build"
