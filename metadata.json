@@ -1,0 +1,7 @@
+{
+  "name": "Accent & Language Detector",
+  "description": "An elegant web application that uses AI to analyze your voice, detect the language you are speaking, and identify your accent with confidence scores.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
